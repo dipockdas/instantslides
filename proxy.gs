@@ -1,13 +1,3 @@
- "dialog": {
-      "intents": [
-        {
-          "name": "GetTravelTime",
-          "confirmationRequired": false,
-          "prompts": {},
-          "slots"
-
-
-
 function connect(nlq,resultType) {
   
   // var url = 'https://api.askpony.com/services/search/1cc86d4308f147f09c90c3acc58835cf/daily sales in london last 10 days';
