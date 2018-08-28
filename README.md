@@ -1,5 +1,6 @@
 # instantslides
-Demonstration of slides content generation using Jubilee NLP API
+
+Google Slides generation using Splunk Jubilee NLP API. Just enter your natural language query and get instant chart results...
 
 A Google AppScript project that connects to Splunk Project Jubilee's REST API. The REST API lets you issue queries to get data out of Splunk using natural language. You don't need to use or learn SPL.
 
@@ -18,5 +19,16 @@ The following files exist
 
 To get this running in a Google Slide - Open Slides->Tools->Script Editor. Please upload or recreate each file and paste in the script code.
 
-Don't forget to update the token and the URL of the workspace you are querying.
+**Important!! **
+This project uses moment.js library. To use this library you need to add it by going to Resources->Libraries. Enter the following key into the 'Add key' box and submit
+
+15hgNOjKHUG4UtyZl9clqBbl23sDvWMS8pfDJOyIapZk5RBqwL3i-rlCo
+
+Now you have moment.js added to the project you need to add the access token and the URL of the workspace you are querying.
+
+Details to do this can be found in the following Github project
+[here](https://github.com/dipockdas/jubilee-cli)
+
+
+
  
