@@ -36,6 +36,8 @@ var chart = sheet.newChart()
     .build();
 
 sheet.insertChart(chart);
+
+
 var spreadsheetcharts = sheet.getCharts()[0];
 
 Logger.log('Getting chart info');
@@ -50,15 +52,20 @@ Logger.log(spreadsheetcharts.getId());
   // Logger.log(presentationId);
   
   var slides = SlidesApp.getActivePresentation().getSlides();
-  // Logger.log(slides.length);
+  Logger.log(slides.length);
   
-  var pageId = SlidesApp.getActivePresentation().insertSlide(slides.length);
-  var slidechart = pageId.insertSheetsChart(spreadsheetcharts);
+  var insertPoint = slides.length - 1;
+  var pageId = SlidesApp.getActivePresentation().insertSlide(insertPoint);
+  pageId.getBackground().setSolidFill('#FFFFFF');
+  
+  var slidechart = pageId.insertSheetsChart(spreadsheetcharts, 30,60, 600, 300);
   
   var title = pageId.insertTable(1, 1);
    title.setLeft(10);
    title.setTop(10);
    title.getCell(0, 0).getText().setText(String(nlg));
+   title.getCell(0, 0).getText().getTextStyle().setFontFamily('Roboto');
+   title.getCell(0, 0).getText().getTextStyle().setFontSize(20);
   
   // Logger.log(spreadsheet.getId());
   return spreadsheet.getId();
