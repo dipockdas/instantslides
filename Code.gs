@@ -99,67 +99,61 @@ function translateSelectedElements(resultType) {
 
   // Convert selected elements in-place.
   var answer = '';
-  texts.forEach(function(text) {
+  var iteration = 0;
   
-    // despite saying its a string - it's not. it;s an object with some funky behaviour
+  
+  var name = Utilities.getUuid();
+  var spreadsheet = SpreadsheetApp.create(name);
+  
+  var sURL = spreadsheet.getUrl();
+  Logger.log('set the spreadsheetURL property %s', sURL);
+  PropertiesService.getScriptProperties().setProperty('key', sURL);
+
+  texts.forEach(function(text) {
+    
+    // despite saying its a string - it's not. it's an object with some funky behaviour
     // so we Stringify it then strip the line break and the quotes
-    // pretty knarly stuff
     // Logger.log(text.asString());
     var nlg = JSON.stringify(text.asString());
     nlg = nlg.replace(/"+/g,"");
     var nlgi = nlg.length;
     nlg = nlg.slice(0, (nlgi - 2));
     
-    // text.setText(connect(nlg, resultType));
-    // Logger.log(answer);
-    
+    // execute the query
     result = connect(nlg, resultType);
     
-       // Return null if no data returned.
+  // Return null if no data returned.
   if (!result.queryResult.data) {
     return Logger.log('No rows returned.');
   } else {
-    Logger.log(result.queryResult.data);
+    // Logger.log(result.queryResult.data);
+    Logger.log('Got results for %s', nlg);
   };
   
-  Logger.log('now create table');
-  createTable(result.queryResult.data, nlg);
   
-  Logger.log('now create spreadsheet');
-  var sheet = createSpreadSheet(result.queryResult.data, nlg); 
-  Logger.log('remove spreadsheet');
- 
-  // var foo = DriveApp.getFileById(sheet).setTrashed(true);  // DriveApp.getFileById(spreadsheet.getId()).setTrashed(true);
-  
-  
-  var restStr = 'No results'; 
-  if (result.queryResult.pagination.totalRows > 0){
+    if (resultType === 'spl') {
+         text.setText(result.dslQuery);
+  } else {
+    // text.setText(restStr);
+
+    Logger.log('now create table');
+    createTable(result.queryResult.data, nlg);
     
+    Logger.log('add charts');
+    
+    var restStr = 'No results'; 
+    if (result.queryResult.pagination.totalRows > 0){
         restStr = '';
         const resultArry = result.queryResult.nl.display.split(' ');
-
         resultArry.forEach(function (n) {
           restStr = restStr + n + ' ';  
         });
+      };
+     createCharts(result.queryResult.data,restStr,nlg,iteration);
+    };
     
-        Logger.log(restStr);
-  
-  };
-
-  if (resultType === 'spl') {
-    text.setText(result.dslQuery);
-  } else {
-    text.setText(restStr);
-  };
-  
-  
-    
+  iteration++;
   });
-
 
   return texts.length;
 }
-
-
-
-

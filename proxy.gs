@@ -1,11 +1,11 @@
 function connect(nlq,resultType) {
   
-  // var url = 'https://api.askpony.com/services/search/1cc86d4308f147f09c90c3acc58835cf/daily sales in london last 10 days';
-  var url = 'https://api.askpony.com/services/search/1cc86d4308f147f09c90c3acc58835cf/' + String(nlq);
+  // var url = 'https://api.askpony.com/services/search/GUID/daily sales in london last 10 days';
+  var url = 'https://api.askpony.com/services/search/GUID/' + String(nlq);
   
     var response = UrlFetchApp.fetch(url, {
       headers: {
-        Authorization:       'BEARER TOKEN HERE',
+        Authorization:       'Bearer TOKEN',
         'Cache-Control': 'no-cache',
         'X-Requested-By': 'STANDALONE',
         strictSSL: false,
@@ -21,7 +21,8 @@ function connect(nlq,resultType) {
   if (!result.queryResult.data) {
     return Logger.log('No rows returned.');
   } else {
-    Logger.log(result.queryResult.data);
+    // Logger.log(result.queryResult.data);
+    Logger.log('**************************************************************************');
   };
 
  return(result);
